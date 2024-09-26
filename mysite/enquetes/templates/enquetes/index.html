@@ -1,0 +1,28 @@
+{% extends "enquetes/base.html" %}
+{% load static %}
+
+{% block titulo %}Enquetes Cadastradas{% endblock %}
+
+{% block conteudo %}
+    {% if lista_perguntas %}
+    <div class="container">
+      <div class="row row-cols-1 row-cols-md-2 g-4">
+        {% for pergunta in lista_perguntas %}
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{ pergunta.texto }}</h5>
+              <p class="card-text"><u>Encerra em</u>:
+              {{ pergunta.data_encerramento|date:"d/m/Y" }}.</p>
+              <a href="{% url 'enquetes:detalhes' pergunta.id %}"
+                 class="btn btn-primary">Votar nesta Enquete</a>
+            </div>
+          </div>
+        </div>
+        {% endfor%}
+      </div>
+    </div>
+    {% else %}
+        <h3>Nenhuma enquete cadastrada até o momento!</h3>
+    {% endif %}
+{% endblock%}

@@ -1,0 +1,35 @@
+{% extends "enquetes/base.html" %}
+
+{% block cabecalho %}{% endblock %}
+
+{% block conteudo%}
+    {% if form.errors %}
+        <p>Login e senha informados não são válidos. Tente novamente!</p>
+    {% endif %}
+    <p><br>&nbsp;<br></p>
+    <div class="mx-auto" style="width: 400px;">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Efetue login no sistema</h5>
+          <form class="px-4 py-3" method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="login" class="form-label">Login</label>
+              {{ form.username }}
+            </div>
+            <div class="mb-3">
+              <label for="senha" class="form-label">Senha</label>
+              {{ form.password }}
+            </div>
+            <button type="submit" class="btn btn-primary">Efetuar Login</button>
+            <input type="hidden" name="next" value="{{ next }}"/>
+          </form>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item"
+             href="{% url 'enquetes:adiciona_autor' %}">Ainda não possui
+             cadastro? Cadastre-se</a>
+          <a class="dropdown-item" href="#">Esqueceu a sua senha?</a>
+        </div>
+      </div>
+    </div>
+{% endblock %}

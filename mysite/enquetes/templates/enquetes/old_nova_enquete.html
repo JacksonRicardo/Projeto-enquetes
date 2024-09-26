@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <title>App Enquetes</title>
+    </head>
+    <body>
+        <h2>Cadastramento de Enquete</h2>
+        {% if request.user.is_authenticated %}
+            <p>Bem vindo, {{ request.user.first_name }}
+            {{ request.user.last_name }}
+            ({{ request.user.username }})
+            - <a href="{% url 'logout' %}?next={% url 'enquetes:index' %}">efetuar logout!</a></p>
+        {% endif %}
+
+        <form method="post" action="{% url 'enquetes:adiciona_enquete' %}">
+            {% if msg %}
+                <p><b>{{ msg }}</b></p>
+            {% endif %}
+            {% csrf_token %}
+            Texto da enquete: <input type="text" name="texto"/><br/>
+            Data de encerramento (aaaa-mm-dd):
+            <input type="text" name="encerramento"/><br/>
+            <h4>Opções de resposta:</h4>
+            Opção 1: <input type="texto" name="op1"><br/>
+            Opção 2: <input type="texto" name="op2"><br/>
+            Opção 3: <input type="texto" name="op3"><br/>
+            Opção 4: <input type="texto" name="op4"><br/>
+            Opção 5: <input type="texto" name="op5"><br/>
+            Opção 6: <input type="texto" name="op6"><br/>
+            <p><input type="submit" value="Cadastrar Enquete"></p>
+        </form>
+        <hr/>
+        <a href="{% url 'enquetes:index' %}">
+            Cancelar e voltar a página principal
+        </a>
+    </body>
+</html>

@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <title>App Enquetes</title>
+    </head>
+    <body>
+        <h2>App de Enquetes - Autenticação</h2>
+        {% if form.errors %}
+            <p>Login e senha informados não são válidos. Tente novamente!</p>
+        {% endif %}
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            <p>Digite o seu login: {{ form.username }}</p>
+            <p>Informe a senha: {{ form.password }}</p>
+            <input type="submit" value="Efetuar Login"/>
+            <input type="hidden" name="next" value="{{ next }}"/>
+        </form>
+        <hr/>
+        <a href="{% url 'enquetes:adiciona_autor' %}">
+            Efetue o seu cadastro no sistema
+        </a>
+    </body>
+</html>

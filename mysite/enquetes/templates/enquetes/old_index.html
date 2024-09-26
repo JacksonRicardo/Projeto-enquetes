@@ -1,0 +1,33 @@
+{% load static %}
+
+<html>
+    <head>
+        <title>App Enquente</title>
+        <link rel="stylesheet" type="text/css"
+              href="{% static 'enquetes/styles.css' %}"/>
+    </head>
+    <body>
+        <h1>Aplicação de Enquetes<br/>
+        <img src="{% static 'enquetes/images/logo.png' %}"
+             width="204" heigth="75"/>
+        </h1>
+        <hr/>
+        {% if lista_perguntas %}
+            <ul>
+                {% for pergunta in lista_perguntas %}
+                    <li><a href="{% url 'enquetes:detalhes' pergunta.id %}">
+                        {{ pergunta.texto }}</a>
+                        (ver <a href="{% url 'enquetes:resultado' pergunta.id %}">
+                        parcial</a>)
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <h3>Nenhuma enquete cadastrada até o momento!</h3>
+        {% endif %}
+        <hr/>
+        <a href="{% url 'enquetes:adiciona_enquete' %}">
+            (+) Adiciona nova Enquete
+        </a>
+    </body>
+</html>

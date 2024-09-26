@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>App Enquetes</title>
+  </head>
+  <body>
+
+    {% block navegacao %}
+    <!-- Barra de navegação -->
+    <!-- ################## -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'enquetes:index' %}">App Enquetes</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page"
+                 href="{% url 'enquetes:index' %}">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link"
+                 href="{% url 'enquetes:adiciona_enquete' %}">Adicionar Enquete</a>
+            </li>
+            {% block navitem %}{% endblock %}
+            {% if not user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link"
+                 href="{% url 'login' %}?next={% url 'enquetes:index'%}">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link"
+                 href="{% url 'enquetes:adiciona_autor' %}">Cadastre-se</a>
+            </li>
+            {% else %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Logado como <b>{{ user.username }}</b>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="#">Minhas Enquetes</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item"
+                    href="{% url 'logout' %}?next={% url 'enquetes:index' %}">Logout</a></li>
+              </ul>
+            </li>
+            {% endif %}
+          </ul>
+          <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+    </nav>
+    {% endblock %}
+
+    {% block cabecalho %}
+    <!-- Título principal da página -->
+    <!-- ########################## -->
+    <div class="p-4 mb-2 bg-light rounded-3">
+      <div class="container-fluid py-2">
+        <h1 class="display-5 fw-bold">
+            {% block titulo %}Enquetes Cadastradas{% endblock %}
+        </h1>
+      </div>
+    </div>
+    {% endblock %}
+
+    <!-- Exibição das mensagens -->
+    <!-- ###################### -->
+    {% if messages %}
+        <div class="container-lg">
+        {% for msg in messages %}
+            <div class="alert {% if msg.level_tag == 'error' %}alert-danger{% else %}alert-{{ msg.level_tag }}{% endif %}" role="alert">
+                {{ msg.message }}
+            </div>
+        {% endfor %}
+        </div>
+    {% endif %}
+
+    {% block conteudo %}{% endblock %}
+
+
+    {% block rodape %}
+    <!-- Rodapé principal da página -->
+    <!-- ########################## -->
+    <p><br>&nbsp;<br></p>
+    <nav class="navbar fixed-bottom navbar-dark bg-dark">
+      <div class="container-fluid">
+        <span class="text-muted">&copy; 2021 DSWeb/TADS/CNAT/IFRN</span>
+      </div>
+    </nav>
+    {% endblock %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  </body>
+</html>
